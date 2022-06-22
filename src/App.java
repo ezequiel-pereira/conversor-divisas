@@ -7,10 +7,6 @@ import com.conversor.modelo.Divisa;
 import com.conversor.modelo.OpcionConversion;
 
 /**
- * 
- */
-
-/**
  * @author ezequiel
  *
  */
@@ -40,12 +36,27 @@ public class App {
 			opciones.add(new OpcionConversion(divisas.get(i), divisas.get(0)));
 		}
 
-		OpcionConversion opcionElegida =  (OpcionConversion) JOptionPane.showInputDialog(null, "Seleccione una opción Seleccione una opción Seleccione una opción", "OPCIONES",
+		OpcionConversion opcionElegida =  (OpcionConversion) JOptionPane.showInputDialog(null, "Seleccione una opción ", "Opciones de conversi",
 				JOptionPane.QUESTION_MESSAGE, null, opciones.toArray(), opciones.toArray()[0]);
 		
-		System.out.println(opcionElegida);
+		String entradaUsuario;
+		Double valorConvertir = 0.0;
 		
-		double valorConvertir = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el valor a convertir"));
+		boolean valorConvertirValido = false;
+		
+		while (!valorConvertirValido) {
+			entradaUsuario = JOptionPane.showInputDialog("Ingrese el valor a convertir");
+			
+			try {
+				valorConvertir = Double.parseDouble(entradaUsuario);
+			} catch (NumberFormatException e) {
+				continue;
+			}
+			
+			if (!valorConvertir.isNaN() && valorConvertir > 0) {
+				valorConvertirValido = true;
+			}
+		}
 		
 		Divisa divisaOrigen = opcionElegida.getDivisaOrigen();
 		Divisa divisaDestino = opcionElegida.getDivisaDestino();
