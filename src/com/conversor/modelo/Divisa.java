@@ -25,10 +25,17 @@ public class Divisa {
 	 * @param divisaDestino 
 	 * @return
 	 */
-	public Double convertir(Double valor, Divisa divisaDestino) {
-		Double valorConvertido = valor * divisaDestino.getTasaConversion();
-		System.out.println("aaa");
-		return valorConvertido;
+	public Double convertir(Double valor, Divisa divisaBase, OpcionConversion opcionConversion) {
+		
+		Double valorConvertido;
+		
+		if (divisaBase.equals(opcionConversion.getDivisaDestino())) {
+			valorConvertido = valor / opcionConversion.getDivisaOrigen().getTasaConversion();
+			return valorConvertido;
+		} else {
+			valorConvertido = valor * opcionConversion.getDivisaDestino().getTasaConversion();
+			return valorConvertido;
+		}
 	}
 
 	/**

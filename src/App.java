@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import com.conversor.modelo.Divisa;
@@ -17,9 +18,10 @@ public class App {
 	 */
 	public static void main(String[] args) {
 
+		Divisa divisaBase = new Divisa("Peso", 1.00);
+
 		List<Divisa> divisas = new ArrayList<Divisa>();
 
-		divisas.add(new Divisa("Peso", 1.00));
 		divisas.add(new Divisa("Dólar", 0.00814));
 		divisas.add(new Divisa("Euro", 0.007736));
 		divisas.add(new Divisa("Libras Esterlinas", 0.006639));
@@ -28,12 +30,12 @@ public class App {
 
 		List<OpcionConversion> opciones = new ArrayList<OpcionConversion>();
 
-		for (int i = 1; i < divisas.size(); i++) {
-			opciones.add(new OpcionConversion(divisas.get(0), divisas.get(i)));
+		for (int i = 0; i < divisas.size(); i++) {
+			opciones.add(new OpcionConversion(divisaBase, divisas.get(i)));
 		}
 
-		for (int i = 1; i < divisas.size(); i++) {
-			opciones.add(new OpcionConversion(divisas.get(i), divisas.get(0)));
+		for (int i = 0; i < divisas.size(); i++) {
+			opciones.add(new OpcionConversion(divisas.get(i), divisaBase));
 		}
 
 		OpcionConversion opcionElegida = (OpcionConversion) JOptionPane.showInputDialog(null, "Seleccione una opción ",
@@ -58,10 +60,7 @@ public class App {
 			}
 		}
 
-		Divisa divisaOrigen = opcionElegida.getDivisaOrigen();
-		Divisa divisaDestino = opcionElegida.getDivisaDestino();
-
-		Double valorConvertido = divisaOrigen.convertir(valorConvertir, divisaDestino);
+		Double valorConvertido = opcionElegida.getDivisaOrigen().convertir(valorConvertir, divisaBase, opcionElegida);
 
 		String mensaje = "El valor convertido es: " + valorConvertido.toString();
 
